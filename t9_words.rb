@@ -1,6 +1,12 @@
 class T9Words
-  def self.search(phone_number)
-    phone = phone_number.to_s
+  def self.search(phone_number="")
+    phone = phone_number.to_s.strip
+
+    if phone.match(/^\d{10}$/) == nil
+      return "Please enter a valid 10 digit phone number"
+    elsif phone.match(/[01]/)
+      return "Error: Phone number should not contain 0 or 1"
+    end
 
     dictionary_file = './data/dictionary.txt'
 
