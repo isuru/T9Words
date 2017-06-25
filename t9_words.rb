@@ -73,11 +73,11 @@ class T9Words
         name.strip.size == 5
       }
       names_5R = names.select{|name|
-        name[0].match(t9_map[phone[4].to_i]) &&
-        name[1].match(t9_map[phone[5].to_i]) &&
-        name[2].match(t9_map[phone[6].to_i]) &&
-        name[3].match(t9_map[phone[7].to_i]) &&
-        name[4].match(t9_map[phone[8].to_i]) &&
+        name[0].match(t9_map[phone[5].to_i]) &&
+        name[1].match(t9_map[phone[6].to_i]) &&
+        name[2].match(t9_map[phone[7].to_i]) &&
+        name[3].match(t9_map[phone[8].to_i]) &&
+        name[4].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 5
       }
       puts names_5L
@@ -144,6 +144,7 @@ class T9Words
         name.strip.size == 10
       }
       puts names_10
+
     else
       return "Error: Couldn't find the dictionary file."
     end
