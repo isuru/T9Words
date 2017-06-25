@@ -5,7 +5,9 @@ class T9Words
     dictionary_file = './data/dictionary.txt'
 
     if File.exists?(dictionary_file)
-      names = File.readlines(dictionary_file)
+      all_names = File.readlines(dictionary_file)
+      names = all_names.select{ |name| name if (name.size >= 3 && name.size <= 11) } # Limitting to 3..10 character words (11 for including \n character)
+
       t9_map = {
         2 => /[abc]/,
         3 => /[def]/,
@@ -17,7 +19,8 @@ class T9Words
         9 => /[wxyz]/
       }
 
-      puts "-----3|7------"
+      words = []
+
       # 3|7 match:
       # 668 | 6787825
       names_3L = names.select{|name|
@@ -36,10 +39,12 @@ class T9Words
         name[6].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 7
       }
-      puts names_3L
-      puts names_7R
+      unless names_7R.empty? || names_7R.empty?
+        (names_3L.product names_7R).each do |w|
+          words << w
+        end
+      end
 
-      puts "-----4|6------"
       # 4|6 match:
       # 6686 | 787825
       names_4L = names.select{|name|
@@ -58,10 +63,12 @@ class T9Words
         name[5].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 6
       }
-      puts names_4L
-      puts names_6R
+      unless names_4L.empty? || names_6R.empty?
+        (names_4L.product names_6R).each do |w|
+          words << w
+        end
+      end
 
-      puts "-----5|5------"
       # 5|5 match:
       # 66867 | 87825
       names_5L = names.select{|name|
@@ -80,10 +87,12 @@ class T9Words
         name[4].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 5
       }
-      puts names_5L
-      puts names_5R
+      unless names_5L.empty? || names_5R.empty?
+        (names_5L.product names_5R).each do |w|
+          words << w
+        end
+      end
 
-      puts "-----6|4------"
       # 6|4 match:
       # 668678 | 7825
       names_6L = names.select{|name|
@@ -102,10 +111,12 @@ class T9Words
         name[3].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 4
       }
-      puts names_6L
-      puts names_4R
+      unless names_6L.empty? || names_4R.empty?
+        (names_6L.product names_4R).each do |w|
+          words << w
+        end
+      end
 
-      puts "-----7|3------"
       # 7|3 match:
       # 6686787 | 825
       names_7L = names.select{|name|
@@ -124,10 +135,12 @@ class T9Words
         name[2].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 3
       }
-      puts names_7L
-      puts names_3R
+      unless names_7L.empty? || names_3R.empty?
+        (names_7L.product names_3R).each do |w|
+          words << w
+        end
+      end
 
-      puts "-----10------"
       # 10 match:
       # 6686787825
       names_10 = names.select{|name|
@@ -143,13 +156,18 @@ class T9Words
         name[9].match(t9_map[phone[9].to_i]) &&
         name.strip.size == 10
       }
-      puts names_10
+      unless names_10.empty?
+        names_10.each do |w|
+          words << w
+        end
+      end
 
+      words.compact
     else
       return "Error: Couldn't find the dictionary file."
     end
   end
 end
 
-T9Words.search "6686787825"
+# T9Words.search "6686787825"
 # T9Words.search 2282668687
