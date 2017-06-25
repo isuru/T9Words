@@ -5,7 +5,7 @@ Usage:
 ```
 > irb
 > require './t9_words'
-=> true
-> T9Words.search 6686787825
+> t9 = T9Words.new
+> t9.search 6686787825
 => [["motor", "usual"], ....
 ```
